@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ujiuye.usual.mapper.ExpendituretypeMapper" >
+  <resultMap id="BaseResultMap" type="com.ujiuye.usual.bean.Expendituretype" >
+    <id column="etid" property="etid" jdbcType="INTEGER" />
+    <result column="etname" property="etname" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    etid, etname
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from expendituretype
+    where etid = #{etid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from expendituretype
+    where etid = #{etid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ujiuye.usual.bean.Expendituretype" >
+    insert into expendituretype (etid, etname)
+    values (#{etid,jdbcType=INTEGER}, #{etname,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ujiuye.usual.bean.Expendituretype" >
+    insert into expendituretype
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="etid != null" >
+        etid,
+      </if>
+      <if test="etname != null" >
+        etname,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="etid != null" >
+        #{etid,jdbcType=INTEGER},
+      </if>
+      <if test="etname != null" >
+        #{etname,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ujiuye.usual.bean.Expendituretype" >
+    update expendituretype
+    <set >
+      <if test="etname != null" >
+        etname = #{etname,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where etid = #{etid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ujiuye.usual.bean.Expendituretype" >
+    update expendituretype
+    set etname = #{etname,jdbcType=VARCHAR}
+    where etid = #{etid,jdbcType=INTEGER}
+  </update>
+  <!-- 显示所有的支出类型 -->
+  <select id="showEt" resultMap="BaseResultMap" parameterType="com.ujiuye.util.MarkInfo">
+         select *  from  expendituretype
+  </select>
+
+</mapper>

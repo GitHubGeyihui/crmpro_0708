@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ujiuye.pro.mapper.FunctionMapper" >
+  <resultMap id="BaseResultMap" type="com.ujiuye.pro.bean.Function" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="proname" property="proname" jdbcType="VARCHAR" />
+    <result column="analysisname" property="analysisname" jdbcType="VARCHAR" />
+    <result column="modele_fk" property="modeleFk" jdbcType="INTEGER" />
+    <result column="functionname" property="functionname" jdbcType="VARCHAR" />
+    <result column="level" property="level" jdbcType="VARCHAR" />
+    <result column="simpledis" property="simpledis" jdbcType="VARCHAR" />
+    <result column="detaileddis" property="detaileddis" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, proname, analysisname, modele_fk, functionname, level, simpledis, detaileddis, 
+    remark
+  </sql>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from function
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ujiuye.pro.bean.Function" >
+    insert into function (id, proname, analysisname, 
+      modele_fk, functionname, level, 
+      simpledis, detaileddis, remark
+      )
+    values (#{id,jdbcType=INTEGER}, #{proname,jdbcType=VARCHAR}, #{analysisname,jdbcType=VARCHAR}, 
+      #{modeleFk,jdbcType=INTEGER}, #{functionname,jdbcType=VARCHAR}, #{level,jdbcType=VARCHAR}, 
+      #{simpledis,jdbcType=VARCHAR}, #{detaileddis,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ujiuye.pro.bean.Function" >
+    insert into function
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="proname != null" >
+        proname,
+      </if>
+      <if test="analysisname != null" >
+        analysisname,
+      </if>
+      <if test="modeleFk != null" >
+        modele_fk,
+      </if>
+      <if test="functionname != null" >
+        functionname,
+      </if>
+      <if test="level != null" >
+        level,
+      </if>
+      <if test="simpledis != null" >
+        simpledis,
+      </if>
+      <if test="detaileddis != null" >
+        detaileddis,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="proname != null" >
+        #{proname,jdbcType=VARCHAR},
+      </if>
+      <if test="analysisname != null" >
+        #{analysisname,jdbcType=VARCHAR},
+      </if>
+      <if test="modeleFk != null" >
+        #{modeleFk,jdbcType=INTEGER},
+      </if>
+      <if test="functionname != null" >
+        #{functionname,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null" >
+        #{level,jdbcType=VARCHAR},
+      </if>
+      <if test="simpledis != null" >
+        #{simpledis,jdbcType=VARCHAR},
+      </if>
+      <if test="detaileddis != null" >
+        #{detaileddis,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ujiuye.pro.bean.Function" >
+    update function
+    <set >
+      <if test="proname != null" >
+        proname = #{proname,jdbcType=VARCHAR},
+      </if>
+      <if test="analysisname != null" >
+        analysisname = #{analysisname,jdbcType=VARCHAR},
+      </if>
+      <if test="modeleFk != null" >
+        modele_fk = #{modeleFk,jdbcType=INTEGER},
+      </if>
+      <if test="functionname != null" >
+        functionname = #{functionname,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null" >
+        level = #{level,jdbcType=VARCHAR},
+      </if>
+      <if test="simpledis != null" >
+        simpledis = #{simpledis,jdbcType=VARCHAR},
+      </if>
+      <if test="detaileddis != null" >
+        detaileddis = #{detaileddis,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ujiuye.pro.bean.Function" >
+    update function
+    set proname = #{proname,jdbcType=VARCHAR},
+      analysisname = #{analysisname,jdbcType=VARCHAR},
+      modele_fk = #{modeleFk,jdbcType=INTEGER},
+      functionname = #{functionname,jdbcType=VARCHAR},
+      level = #{level,jdbcType=VARCHAR},
+      simpledis = #{simpledis,jdbcType=VARCHAR},
+      detaileddis = #{detaileddis,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <resultMap id="newmodule" type="com.ujiuye.pro.bean.Function" extends="BaseResultMap">
+    <association property="module" column="modele_fk" javaType="com.ujiuye.pro.bean.Module" select="com.ujiuye.pro.mapper.ModuleMapper.selectByPrimaryKey"/>
+
+
+  </resultMap>
+  <select id="getAllFunction" resultMap="newmodule">
+        select * from function
+  </select>
+  <select id="checkFunction" resultMap="BaseResultMap">
+        select * from function where functionname=#{fname} and modele_fk = #{mid}
+  </select>
+  <select id="showNoTaskInfoFunction" resultMap="BaseResultMap">
+    select * from function where id not in (select fun_fk from task) and  modele_fk=#{mid} ;
+  </select>
+</mapper>

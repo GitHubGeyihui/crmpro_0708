@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ujiuye.usual.mapper.TaskMapper">
+    <resultMap id="BaseResultMap" type="com.ujiuye.usual.bean.Task">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="starttime" property="starttime" jdbcType="DATE"/>
+        <result column="endtime" property="endtime" jdbcType="DATE"/>
+        <result column="level" property="level" jdbcType="VARCHAR"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="fun_fk" property="funFk" jdbcType="INTEGER"/>
+        <result column="emp_fk2" property="empFk2" jdbcType="INTEGER"/>
+        <result column="emp_fk" property="empFk" jdbcType="INTEGER"/>
+        <result column="tasktitle" property="tasktitle" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, starttime, endtime, level, remark, fun_fk, emp_fk2, emp_fk, tasktitle, status
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from task
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from task
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.ujiuye.usual.bean.Task">
+    insert into task (id, starttime, endtime, 
+      level, remark, fun_fk, 
+      emp_fk2, emp_fk, tasktitle, 
+      status)
+    values (#{id,jdbcType=INTEGER}, #{starttime,jdbcType=DATE}, #{endtime,jdbcType=DATE}, 
+      #{level,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{funFk,jdbcType=INTEGER}, 
+      #{empFk2,jdbcType=INTEGER}, #{empFk,jdbcType=INTEGER}, #{tasktitle,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER})
+  </insert>
+    <insert id="insertSelective" parameterType="com.ujiuye.usual.bean.Task">
+        insert into task
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="starttime != null">
+                starttime,
+            </if>
+            <if test="endtime != null">
+                endtime,
+            </if>
+            <if test="level != null">
+                level,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+            <if test="funFk != null">
+                fun_fk,
+            </if>
+            <if test="empFk2 != null">
+                emp_fk2,
+            </if>
+            <if test="empFk != null">
+                emp_fk,
+            </if>
+            <if test="tasktitle != null">
+                tasktitle,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="starttime != null">
+                #{starttime,jdbcType=DATE},
+            </if>
+            <if test="endtime != null">
+                #{endtime,jdbcType=DATE},
+            </if>
+            <if test="level != null">
+                #{level,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="funFk != null">
+                #{funFk,jdbcType=INTEGER},
+            </if>
+            <if test="empFk2 != null">
+                #{empFk2,jdbcType=INTEGER},
+            </if>
+            <if test="empFk != null">
+                #{empFk,jdbcType=INTEGER},
+            </if>
+            <if test="tasktitle != null">
+                #{tasktitle,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.ujiuye.usual.bean.Task">
+        update task
+        <set>
+            <if test="starttime != null">
+                starttime = #{starttime,jdbcType=DATE},
+            </if>
+            <if test="endtime != null">
+                endtime = #{endtime,jdbcType=DATE},
+            </if>
+            <if test="level != null">
+                level = #{level,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="funFk != null">
+                fun_fk = #{funFk,jdbcType=INTEGER},
+            </if>
+            <if test="empFk2 != null">
+                emp_fk2 = #{empFk2,jdbcType=INTEGER},
+            </if>
+            <if test="empFk != null">
+                emp_fk = #{empFk,jdbcType=INTEGER},
+            </if>
+            <if test="tasktitle != null">
+                tasktitle = #{tasktitle,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.ujiuye.usual.bean.Task">
+    update task
+    set starttime = #{starttime,jdbcType=DATE},
+      endtime = #{endtime,jdbcType=DATE},
+      level = #{level,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      fun_fk = #{funFk,jdbcType=INTEGER},
+      emp_fk2 = #{empFk2,jdbcType=INTEGER},
+      emp_fk = #{empFk,jdbcType=INTEGER},
+      tasktitle = #{tasktitle,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+    <resultMap id="newTask" type="com.ujiuye.usual.bean.Task">
+        <!-- 任務的執行者-->
+        <association property="employee2" column="emp_fk2" javaType="com.ujiuye.emp.bean.Employee"
+                     select="com.ujiuye.emp.mapper.EmployeeMapper.selectByPrimaryKey"></association>
+        <!-- 任務的分配者-->
+        <association property="employee" column="emp_fk" javaType="com.ujiuye.emp.bean.Employee"
+                     select="com.ujiuye.emp.mapper.EmployeeMapper.selectByPrimaryKey"></association>
+    </resultMap>
+    <select id="getTaskByEid" resultMap="newTask" parameterType="com.ujiuye.util.MarkInfo">
+        select * from task
+        <where>
+            <!-- 任務的分配者-->
+            <if test="eid!=null and mark==3">
+                and emp_fk=#{eid}
+            </if>
+            <!-- 任務的分配者-->
+            <if test="eid!=null and mark==4">
+                 and emp_fk2=#{eid}
+            </if>
+            <if test="mark==0">
+                and status=0
+            </if>
+            <if test="mark==1">
+                and status=1
+            </if>
+            <if test="mark==2">
+                and status=2
+            </if>
+            <if test="mark==5">
+                and emp_fk2=#{eid} and (status=1 or  status =0)
+            </if>
+        </where>
+    </select>
+</mapper>

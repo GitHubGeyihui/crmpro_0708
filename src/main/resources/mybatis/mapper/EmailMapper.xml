@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ujiuye.usual.mapper.EmailMapper" >
+  <resultMap id="BaseResultMap" type="com.ujiuye.usual.bean.Email" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="sendtime" property="sendtime" jdbcType="TIMESTAMP" />
+    <result column="emp_fk" property="empFk" jdbcType="INTEGER" />
+    <result column="emp_fk2" property="empFk2" jdbcType="INTEGER" />
+    <result column="emailcontent" property="emailcontent" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, title, sendtime, emp_fk, emp_fk2, emailcontent
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from email
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from email
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ujiuye.usual.bean.Email" >
+    insert into email (id, title, sendtime, 
+      emp_fk, emp_fk2, emailcontent
+      )
+    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{sendtime,jdbcType=TIMESTAMP}, 
+      #{empFk,jdbcType=INTEGER}, #{empFk2,jdbcType=INTEGER}, #{emailcontent,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ujiuye.usual.bean.Email" >
+    insert into email
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="sendtime != null" >
+        sendtime,
+      </if>
+      <if test="empFk != null" >
+        emp_fk,
+      </if>
+      <if test="empFk2 != null" >
+        emp_fk2,
+      </if>
+      <if test="emailcontent != null" >
+        emailcontent,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="sendtime != null" >
+        #{sendtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="empFk != null" >
+        #{empFk,jdbcType=INTEGER},
+      </if>
+      <if test="empFk2 != null" >
+        #{empFk2,jdbcType=INTEGER},
+      </if>
+      <if test="emailcontent != null" >
+        #{emailcontent,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ujiuye.usual.bean.Email" >
+    update email
+    <set >
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="sendtime != null" >
+        sendtime = #{sendtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="empFk != null" >
+        emp_fk = #{empFk,jdbcType=INTEGER},
+      </if>
+      <if test="empFk2 != null" >
+        emp_fk2 = #{empFk2,jdbcType=INTEGER},
+      </if>
+      <if test="emailcontent != null" >
+        emailcontent = #{emailcontent,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ujiuye.usual.bean.Email" >
+    update email
+    set title = #{title,jdbcType=VARCHAR},
+      sendtime = #{sendtime,jdbcType=TIMESTAMP},
+      emp_fk = #{empFk,jdbcType=INTEGER},
+      emp_fk2 = #{empFk2,jdbcType=INTEGER},
+      emailcontent = #{emailcontent,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="getEmailInfo" resultMap="BaseResultMap">
+       select *  from email
+  </select>
+</mapper>

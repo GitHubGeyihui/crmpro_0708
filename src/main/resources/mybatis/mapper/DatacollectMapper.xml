@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ujiuye.duibiao.mapper.DatacollectMapper">
+    <resultMap id="BaseResultMap" type="com.ujiuye.duibiao.bean.Datacollect">
+        <id column="daid" property="daid" jdbcType="INTEGER"/>
+        <result column="dacname" property="dacname" jdbcType="VARCHAR"/>
+        <result column="daturnover" property="daturnover" jdbcType="DOUBLE"/>
+        <result column="datime" property="datime" jdbcType="DATE"/>
+        <result column="dabusiness" property="dabusiness" jdbcType="VARCHAR"/>
+        <result column="dasuperiority" property="dasuperiority" jdbcType="VARCHAR"/>
+        <result column="dainforiority" property="dainforiority" jdbcType="VARCHAR"/>
+        <result column="dasort" property="dasort" jdbcType="INTEGER"/>
+        <result column="empcount" property="empcount" jdbcType="INTEGER"/>
+        <result column="buildtime" property="buildtime" jdbcType="DATE"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="daother" property="daother" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    daid, dacname, daturnover, datime, dabusiness, dasuperiority, dainforiority, dasort, 
+    empcount, buildtime, remark, daother
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from datacollect
+        where daid = #{daid,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from datacollect
+    where daid = #{daid,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.ujiuye.duibiao.bean.Datacollect">
+    insert into datacollect (daid, dacname, daturnover, 
+      datime, dabusiness, dasuperiority, 
+      dainforiority, dasort, empcount, 
+      buildtime, remark, daother
+      )
+    values (#{daid,jdbcType=INTEGER}, #{dacname,jdbcType=VARCHAR}, #{daturnover,jdbcType=DOUBLE}, 
+      #{datime,jdbcType=DATE}, #{dabusiness,jdbcType=VARCHAR}, #{dasuperiority,jdbcType=VARCHAR}, 
+      #{dainforiority,jdbcType=VARCHAR}, #{dasort,jdbcType=INTEGER}, #{empcount,jdbcType=INTEGER}, 
+      #{buildtime,jdbcType=DATE}, #{remark,jdbcType=VARCHAR}, #{daother,jdbcType=VARCHAR}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.ujiuye.duibiao.bean.Datacollect">
+        insert into datacollect
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="daid != null">
+                daid,
+            </if>
+            <if test="dacname != null">
+                dacname,
+            </if>
+            <if test="daturnover != null">
+                daturnover,
+            </if>
+            <if test="datime != null">
+                datime,
+            </if>
+            <if test="dabusiness != null">
+                dabusiness,
+            </if>
+            <if test="dasuperiority != null">
+                dasuperiority,
+            </if>
+            <if test="dainforiority != null">
+                dainforiority,
+            </if>
+            <if test="dasort != null">
+                dasort,
+            </if>
+            <if test="empcount != null">
+                empcount,
+            </if>
+            <if test="buildtime != null">
+                buildtime,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+            <if test="daother != null">
+                daother,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="daid != null">
+                #{daid,jdbcType=INTEGER},
+            </if>
+            <if test="dacname != null">
+                #{dacname,jdbcType=VARCHAR},
+            </if>
+            <if test="daturnover != null">
+                #{daturnover,jdbcType=DOUBLE},
+            </if>
+            <if test="datime != null">
+                #{datime,jdbcType=DATE},
+            </if>
+            <if test="dabusiness != null">
+                #{dabusiness,jdbcType=VARCHAR},
+            </if>
+            <if test="dasuperiority != null">
+                #{dasuperiority,jdbcType=VARCHAR},
+            </if>
+            <if test="dainforiority != null">
+                #{dainforiority,jdbcType=VARCHAR},
+            </if>
+            <if test="dasort != null">
+                #{dasort,jdbcType=INTEGER},
+            </if>
+            <if test="empcount != null">
+                #{empcount,jdbcType=INTEGER},
+            </if>
+            <if test="buildtime != null">
+                #{buildtime,jdbcType=DATE},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="daother != null">
+                #{daother,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.ujiuye.duibiao.bean.Datacollect">
+        update datacollect
+        <set>
+            <if test="dacname != null">
+                dacname = #{dacname,jdbcType=VARCHAR},
+            </if>
+            <if test="daturnover != null">
+                daturnover = #{daturnover,jdbcType=DOUBLE},
+            </if>
+            <if test="datime != null">
+                datime = #{datime,jdbcType=DATE},
+            </if>
+            <if test="dabusiness != null">
+                dabusiness = #{dabusiness,jdbcType=VARCHAR},
+            </if>
+            <if test="dasuperiority != null">
+                dasuperiority = #{dasuperiority,jdbcType=VARCHAR},
+            </if>
+            <if test="dainforiority != null">
+                dainforiority = #{dainforiority,jdbcType=VARCHAR},
+            </if>
+            <if test="dasort != null">
+                dasort = #{dasort,jdbcType=INTEGER},
+            </if>
+            <if test="empcount != null">
+                empcount = #{empcount,jdbcType=INTEGER},
+            </if>
+            <if test="buildtime != null">
+                buildtime = #{buildtime,jdbcType=DATE},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="daother != null">
+                daother = #{daother,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where daid = #{daid,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.ujiuye.duibiao.bean.Datacollect">
+    update datacollect
+    set dacname = #{dacname,jdbcType=VARCHAR},
+      daturnover = #{daturnover,jdbcType=DOUBLE},
+      datime = #{datime,jdbcType=DATE},
+      dabusiness = #{dabusiness,jdbcType=VARCHAR},
+      dasuperiority = #{dasuperiority,jdbcType=VARCHAR},
+      dainforiority = #{dainforiority,jdbcType=VARCHAR},
+      dasort = #{dasort,jdbcType=INTEGER},
+      empcount = #{empcount,jdbcType=INTEGER},
+      buildtime = #{buildtime,jdbcType=DATE},
+      remark = #{remark,jdbcType=VARCHAR},
+      daother = #{daother,jdbcType=VARCHAR}
+    where daid = #{daid,jdbcType=INTEGER}
+  </update>
+    <select id="showDaInfo" resultMap="BaseResultMap" parameterType="com.ujiuye.util.MarkInfo">
+        <if test="mark==1">
+            SELECT *  FROM  (SELECT *  FROM  datacollect ORDER BY datime DESC) a  GROUP BY dacname
+        </if>
+        <if test="mark==2">
+            SELECT * FROM  datacollect WHERE dacname=#{info} AND daid!=#{eid};
+        </if>
+        <if test="mark==3">
+            select *  from  datacollect where dacname='浪潮集团'
+        </if>
+    </select>
+</mapper>

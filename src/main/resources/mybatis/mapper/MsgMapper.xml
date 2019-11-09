@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ujiuye.usual.mapper.MsgMapper" >
+  <resultMap id="BaseResultMap" type="com.ujiuye.usual.bean.Msg" >
+    <id column="msgid" property="msgid" jdbcType="INTEGER" />
+    <result column="sendp" property="sendp" jdbcType="INTEGER" />
+    <result column="recvp" property="recvp" jdbcType="INTEGER" />
+    <result column="mark" property="mark" jdbcType="INTEGER" />
+    <result column="msgcontent" property="msgcontent" jdbcType="VARCHAR" />
+    <result column="msgtime" property="msgtime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    msgid, sendp, recvp, mark, msgcontent, msgtime
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from msg
+    where msgid = #{msgid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from msg
+    where msgid = #{msgid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ujiuye.usual.bean.Msg" >
+    insert into msg (msgid, sendp, recvp, 
+      mark, msgcontent, msgtime
+      )
+    values (#{msgid,jdbcType=INTEGER}, #{sendp,jdbcType=INTEGER}, #{recvp,jdbcType=INTEGER}, 
+      #{mark,jdbcType=INTEGER}, #{msgcontent,jdbcType=VARCHAR}, #{msgtime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ujiuye.usual.bean.Msg" >
+    insert into msg
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="msgid != null" >
+        msgid,
+      </if>
+      <if test="sendp != null" >
+        sendp,
+      </if>
+      <if test="recvp != null" >
+        recvp,
+      </if>
+      <if test="mark != null" >
+        mark,
+      </if>
+      <if test="msgcontent != null" >
+        msgcontent,
+      </if>
+      <if test="msgtime != null" >
+        msgtime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="msgid != null" >
+        #{msgid,jdbcType=INTEGER},
+      </if>
+      <if test="sendp != null" >
+        #{sendp,jdbcType=INTEGER},
+      </if>
+      <if test="recvp != null" >
+        #{recvp,jdbcType=INTEGER},
+      </if>
+      <if test="mark != null" >
+        #{mark,jdbcType=INTEGER},
+      </if>
+      <if test="msgcontent != null" >
+        #{msgcontent,jdbcType=VARCHAR},
+      </if>
+      <if test="msgtime != null" >
+        #{msgtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ujiuye.usual.bean.Msg" >
+    update msg
+    <set >
+      <if test="sendp != null" >
+        sendp = #{sendp,jdbcType=INTEGER},
+      </if>
+      <if test="recvp != null" >
+        recvp = #{recvp,jdbcType=INTEGER},
+      </if>
+      <if test="mark != null" >
+        mark = #{mark,jdbcType=INTEGER},
+      </if>
+      <if test="msgcontent != null" >
+        msgcontent = #{msgcontent,jdbcType=VARCHAR},
+      </if>
+      <if test="msgtime != null" >
+        msgtime = #{msgtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where msgid = #{msgid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ujiuye.usual.bean.Msg" >
+    update msg
+    set sendp = #{sendp,jdbcType=INTEGER},
+      recvp = #{recvp,jdbcType=INTEGER},
+      mark = #{mark,jdbcType=INTEGER},
+      msgcontent = #{msgcontent,jdbcType=VARCHAR},
+      msgtime = #{msgtime,jdbcType=TIMESTAMP}
+    where msgid = #{msgid,jdbcType=INTEGER}
+  </update>
+  <resultMap id="newMsg" type="com.ujiuye.usual.bean.Msg" extends="BaseResultMap">
+    <association property="employee" column="recvp" javaType="com.ujiuye.emp.bean.Employee" select="com.ujiuye.emp.mapper.EmployeeMapper.selectByPrimaryKey"></association>
+  </resultMap>
+
+  <select id="showMsg" resultMap="newMsg">
+         select *  from  msg where sendp=#{eid}
+  </select>
+</mapper>

@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ujiuye.usual.mapper.EvaluateMapper" >
+    <resultMap id="BaseResultMap" type="com.ujiuye.usual.bean.Evaluate" >
+        <id column="evaid" property="evaid" jdbcType="INTEGER" />
+        <result column="forum_fk" property="forumFk" jdbcType="INTEGER" />
+        <result column="emp_fk4" property="empFk4" jdbcType="INTEGER" />
+        <result column="evaid_fk" property="evaidFk" jdbcType="INTEGER" />
+        <result column="evacontent" property="evacontent" jdbcType="VARCHAR" />
+        <result column="updatetime" property="updatetime" jdbcType="TIMESTAMP" />
+        <result column="evatime" property="evatime" jdbcType="TIMESTAMP" />
+        <result column="evastatus" property="evastatus" jdbcType="INTEGER" />
+    </resultMap>
+    <sql id="Base_Column_List" >
+    evaid, forum_fk, emp_fk4, evaid_fk, evacontent, updatetime, evatime, evastatus
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+        select
+        <include refid="Base_Column_List" />
+        from evaluate
+        where evaid = #{evaid,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from evaluate
+    where evaid = #{evaid,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.ujiuye.usual.bean.Evaluate" >
+    insert into evaluate (evaid, forum_fk, emp_fk4,
+      evaid_fk, evacontent, updatetime,
+      evatime, evastatus)
+    values (#{evaid,jdbcType=INTEGER}, #{forumFk,jdbcType=INTEGER}, #{empFk4,jdbcType=INTEGER},
+      #{evaidFk,jdbcType=INTEGER}, #{evacontent,jdbcType=VARCHAR}, #{updatetime,jdbcType=TIMESTAMP},
+      #{evatime,jdbcType=TIMESTAMP}, #{evastatus,jdbcType=INTEGER})
+  </insert>
+    <insert id="insertSelective" parameterType="com.ujiuye.usual.bean.Evaluate" >
+        insert into evaluate
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="evaid != null" >
+                evaid,
+            </if>
+            <if test="forumFk != null" >
+                forum_fk,
+            </if>
+            <if test="empFk4 != null" >
+                emp_fk4,
+            </if>
+            <if test="evaidFk != null" >
+                evaid_fk,
+            </if>
+            <if test="evacontent != null" >
+                evacontent,
+            </if>
+            <if test="updatetime != null" >
+                updatetime,
+            </if>
+            <if test="evatime != null" >
+                evatime,
+            </if>
+            <if test="evastatus != null" >
+                evastatus,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="evaid != null" >
+                #{evaid,jdbcType=INTEGER},
+            </if>
+            <if test="forumFk != null" >
+                #{forumFk,jdbcType=INTEGER},
+            </if>
+            <if test="empFk4 != null" >
+                #{empFk4,jdbcType=INTEGER},
+            </if>
+            <if test="evaidFk != null" >
+                #{evaidFk,jdbcType=INTEGER},
+            </if>
+            <if test="evacontent != null" >
+                #{evacontent,jdbcType=VARCHAR},
+            </if>
+            <if test="updatetime != null" >
+                #{updatetime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="evatime != null" >
+                #{evatime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="evastatus != null" >
+                #{evastatus,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.ujiuye.usual.bean.Evaluate" >
+        update evaluate
+        <set >
+            <if test="forumFk != null" >
+                forum_fk = #{forumFk,jdbcType=INTEGER},
+            </if>
+            <if test="empFk4 != null" >
+                emp_fk4 = #{empFk4,jdbcType=INTEGER},
+            </if>
+            <if test="evaidFk != null" >
+                evaid_fk = #{evaidFk,jdbcType=INTEGER},
+            </if>
+            <if test="evacontent != null" >
+                evacontent = #{evacontent,jdbcType=VARCHAR},
+            </if>
+            <if test="updatetime != null" >
+                updatetime = #{updatetime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="evatime != null" >
+                evatime = #{evatime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="evastatus != null" >
+                evastatus = #{evastatus,jdbcType=INTEGER},
+            </if>
+        </set>
+        where evaid = #{evaid,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.ujiuye.usual.bean.Evaluate" >
+    update evaluate
+    set forum_fk = #{forumFk,jdbcType=INTEGER},
+      emp_fk4 = #{empFk4,jdbcType=INTEGER},
+      evaid_fk = #{evaidFk,jdbcType=INTEGER},
+      evacontent = #{evacontent,jdbcType=VARCHAR},
+      updatetime = #{updatetime,jdbcType=TIMESTAMP},
+      evatime = #{evatime,jdbcType=TIMESTAMP},
+      evastatus = #{evastatus,jdbcType=INTEGER}
+    where evaid = #{evaid,jdbcType=INTEGER}
+  </update>
+    <!-- 一级评论的信息 -->
+    <select id="getParentEvaluateByFid" resultMap="BaseResultMap">
+        select *  from  evaluate where forum_fk=#{fid} and evaid_fk is null
+  </select>
+    <!-- 查询子级评价 -->
+    <select id="getChildEvaluateByFid" resultMap="BaseResultMap">
+      select *  from  evaluate where forum_fk=#{fid} and evaid_fk=#{pid}
+  </select>
+    <delete id="deleteInfoByFid" >
+        delete from  evaluate where forum_fk=#{fid}
+  </delete>
+
+</mapper>

@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ujiuye.pro.mapper.AnalysisMapper" >
+  <resultMap id="BaseResultMap" type="com.ujiuye.pro.bean.Analysis" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="proname" property="proname" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="simpledis" property="simpledis" jdbcType="VARCHAR" />
+    <result column="detaileddis" property="detaileddis" jdbcType="VARCHAR" />
+    <result column="addtime" property="addtime" jdbcType="DATE" />
+    <result column="updatetime" property="updatetime" jdbcType="DATE" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, proname, title, simpledis, detaileddis, addtime, updatetime, remark
+  </sql>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from analysis
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ujiuye.pro.bean.Analysis" >
+    insert into analysis (id, proname, title, 
+      simpledis, detaileddis, addtime, 
+      updatetime, remark)
+    values (#{id,jdbcType=INTEGER}, #{proname,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
+      #{simpledis,jdbcType=VARCHAR}, #{detaileddis,jdbcType=VARCHAR}, #{addtime,jdbcType=DATE}, 
+      #{updatetime,jdbcType=DATE}, #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ujiuye.pro.bean.Analysis" >
+    insert into analysis
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="proname != null" >
+        proname,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="simpledis != null" >
+        simpledis,
+      </if>
+      <if test="detaileddis != null" >
+        detaileddis,
+      </if>
+      <if test="addtime != null" >
+        addtime,
+      </if>
+      <if test="updatetime != null" >
+        updatetime,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="proname != null" >
+        #{proname,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="simpledis != null" >
+        #{simpledis,jdbcType=VARCHAR},
+      </if>
+      <if test="detaileddis != null" >
+        #{detaileddis,jdbcType=VARCHAR},
+      </if>
+      <if test="addtime != null" >
+        #{addtime,jdbcType=DATE},
+      </if>
+      <if test="updatetime != null" >
+        #{updatetime,jdbcType=DATE},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ujiuye.pro.bean.Analysis" >
+    update analysis
+    <set >
+      <if test="proname != null" >
+        proname = #{proname,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="simpledis != null" >
+        simpledis = #{simpledis,jdbcType=VARCHAR},
+      </if>
+      <if test="detaileddis != null" >
+        detaileddis = #{detaileddis,jdbcType=VARCHAR},
+      </if>
+      <if test="addtime != null" >
+        addtime = #{addtime,jdbcType=DATE},
+      </if>
+      <if test="updatetime != null" >
+        updatetime = #{updatetime,jdbcType=DATE},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ujiuye.pro.bean.Analysis" >
+    update analysis
+    set proname = #{proname,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      simpledis = #{simpledis,jdbcType=VARCHAR},
+      detaileddis = #{detaileddis,jdbcType=VARCHAR},
+      addtime = #{addtime,jdbcType=DATE},
+      updatetime = #{updatetime,jdbcType=DATE},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <resultMap id="newAna" type="com.ujiuye.pro.bean.Analysis" extends="BaseResultMap">
+       <association property="project" column="id" javaType="com.ujiuye.pro.bean.Project" select="com.ujiuye.pro.mapper.ProjectMapper.selectByPrimaryKey"></association>
+<!--   <collection property="moduleList" column="id" javaType="com.ujiuye.pro.bean.Module" select="com.ujiuye.pro.mapper.ModuleMapper.getInfoByAk"/>-->
+  </resultMap>
+
+  <select id="selectByPrimaryKey" resultMap="newAna" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from analysis
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="showAllAnalysis" resultMap="newAna">
+       select * from analysis
+  </select>
+
+</mapper>

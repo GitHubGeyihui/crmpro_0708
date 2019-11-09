@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ujiuye.pro.mapper.ProjectMapper">
+    <resultMap id="BaseResultMap" type="com.ujiuye.pro.bean.Project">
+        <id column="pid" property="pid" jdbcType="INTEGER"/>
+        <result column="pname" property="pname" jdbcType="VARCHAR"/>
+        <result column="comname" property="comname" jdbcType="INTEGER"/>
+        <result column="emp_fk1" property="empFk1" jdbcType="INTEGER"/>
+        <result column="empcount" property="empcount" jdbcType="INTEGER"/>
+        <result column="starttime" property="starttime" jdbcType="DATE"/>
+        <result column="buildtime" property="buildtime" jdbcType="DATE"/>
+        <result column="cost" property="cost" jdbcType="INTEGER"/>
+        <result column="level" property="level" jdbcType="VARCHAR"/>
+        <result column="endtime" property="endtime" jdbcType="DATE"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="emp_fk" property="empFk" jdbcType="INTEGER"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    pid, pname, comname, emp_fk1, empcount, starttime, buildtime, cost, level, endtime, 
+    remark, emp_fk
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from project
+        where pid = #{pid,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from project
+    where pid = #{pid,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.ujiuye.pro.bean.Project">
+    insert into project (pid, pname, comname, 
+      emp_fk1, empcount, starttime, 
+      buildtime, cost, level, 
+      endtime, remark, emp_fk
+      )
+    values (#{pid,jdbcType=INTEGER}, #{pname,jdbcType=VARCHAR}, #{comname,jdbcType=INTEGER}, 
+      #{empFk1,jdbcType=INTEGER}, #{empcount,jdbcType=INTEGER}, #{starttime,jdbcType=DATE}, 
+      #{buildtime,jdbcType=DATE}, #{cost,jdbcType=INTEGER}, #{level,jdbcType=VARCHAR}, 
+      #{endtime,jdbcType=DATE}, #{remark,jdbcType=VARCHAR}, #{empFk,jdbcType=INTEGER}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.ujiuye.pro.bean.Project">
+        insert into project
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pid != null">
+                pid,
+            </if>
+            <if test="pname != null">
+                pname,
+            </if>
+            <if test="comname != null">
+                comname,
+            </if>
+            <if test="empFk1 != null">
+                emp_fk1,
+            </if>
+            <if test="empcount != null">
+                empcount,
+            </if>
+            <if test="starttime != null">
+                starttime,
+            </if>
+            <if test="buildtime != null">
+                buildtime,
+            </if>
+            <if test="cost != null">
+                cost,
+            </if>
+            <if test="level != null">
+                level,
+            </if>
+            <if test="endtime != null">
+                endtime,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+            <if test="empFk != null">
+                emp_fk,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="pid != null">
+                #{pid,jdbcType=INTEGER},
+            </if>
+            <if test="pname != null">
+                #{pname,jdbcType=VARCHAR},
+            </if>
+            <if test="comname != null">
+                #{comname,jdbcType=INTEGER},
+            </if>
+            <if test="empFk1 != null">
+                #{empFk1,jdbcType=INTEGER},
+            </if>
+            <if test="empcount != null">
+                #{empcount,jdbcType=INTEGER},
+            </if>
+            <if test="starttime != null">
+                #{starttime,jdbcType=DATE},
+            </if>
+            <if test="buildtime != null">
+                #{buildtime,jdbcType=DATE},
+            </if>
+            <if test="cost != null">
+                #{cost,jdbcType=INTEGER},
+            </if>
+            <if test="level != null">
+                #{level,jdbcType=VARCHAR},
+            </if>
+            <if test="endtime != null">
+                #{endtime,jdbcType=DATE},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="empFk != null">
+                #{empFk,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.ujiuye.pro.bean.Project">
+        update project
+        <set>
+            <if test="pname != null">
+                pname = #{pname,jdbcType=VARCHAR},
+            </if>
+            <if test="comname != null">
+                comname = #{comname,jdbcType=INTEGER},
+            </if>
+            <if test="empFk1 != null">
+                emp_fk1 = #{empFk1,jdbcType=INTEGER},
+            </if>
+            <if test="empcount != null">
+                empcount = #{empcount,jdbcType=INTEGER},
+            </if>
+            <if test="starttime != null">
+                starttime = #{starttime,jdbcType=DATE},
+            </if>
+            <if test="buildtime != null">
+                buildtime = #{buildtime,jdbcType=DATE},
+            </if>
+            <if test="cost != null">
+                cost = #{cost,jdbcType=INTEGER},
+            </if>
+            <if test="level != null">
+                level = #{level,jdbcType=VARCHAR},
+            </if>
+            <if test="endtime != null">
+                endtime = #{endtime,jdbcType=DATE},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="empFk != null">
+                emp_fk = #{empFk,jdbcType=INTEGER},
+            </if>
+        </set>
+        where pid = #{pid,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.ujiuye.pro.bean.Project">
+    update project
+    set pname = #{pname,jdbcType=VARCHAR},
+      comname = #{comname,jdbcType=INTEGER},
+      emp_fk1 = #{empFk1,jdbcType=INTEGER},
+      empcount = #{empcount,jdbcType=INTEGER},
+      starttime = #{starttime,jdbcType=DATE},
+      buildtime = #{buildtime,jdbcType=DATE},
+      cost = #{cost,jdbcType=INTEGER},
+      level = #{level,jdbcType=VARCHAR},
+      endtime = #{endtime,jdbcType=DATE},
+      remark = #{remark,jdbcType=VARCHAR},
+      emp_fk = #{empFk,jdbcType=INTEGER}
+    where pid = #{pid,jdbcType=INTEGER}
+  </update>
+
+    <resultMap id="newProject" type="com.ujiuye.pro.bean.Project" extends="BaseResultMap">
+        <association property="customer" column="comname" javaType="com.ujiuye.cus.bean.Customer"
+                     select="com.ujiuye.cus.mapper.CustomerMapper.selectByPrimaryKey"/>
+        <association property="employee" column="emp_fk" javaType="com.ujiuye.emp.bean.Employee"
+                     select="com.ujiuye.emp.mapper.EmployeeMapper.selectByPrimaryKey"/>
+        <association property="analysis" column="pid" javaType="com.ujiuye.pro.bean.Analysis"
+                     select="com.ujiuye.pro.mapper.AnalysisMapper.selectByPrimaryKey"/>
+    </resultMap>
+
+    <select id="getProAndOtherInfo" parameterType="com.ujiuye.util.MarkInfo" resultMap="newProject">
+        select * from project
+        <if test="mark == 0">
+            where pid not in (select id from analysis)
+        </if>
+        <if test="mark == 1">
+            where pid in (select id from analysis)
+        </if>
+        <if test="mark==2">
+            where pid in (select distinct analysis_fk from module )
+        </if>
+        <!--     有用户信息，而且功能是没有被分配的任务-->
+        <if test="mark==3">
+            where pid in (select  distinct analysis_fk from module where id in (select distinct modele_fk from function where id not in (select fun_fk from task)));
+        </if>
+    </select>
+</mapper>

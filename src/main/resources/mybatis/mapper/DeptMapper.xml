@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ujiuye.emp.mapper.DeptMapper" >
+  <resultMap id="BaseResultMap" type="com.ujiuye.emp.bean.Dept" >
+    <id column="deptno" property="deptno" jdbcType="INTEGER" />
+    <result column="dname" property="dname" jdbcType="VARCHAR" />
+    <result column="dlocation" property="dlocation" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    deptno, dname, dlocation
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from dept
+    where deptno = #{deptno,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from dept
+    where deptno = #{deptno,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ujiuye.emp.bean.Dept" >
+    insert into dept (deptno, dname, dlocation
+      )
+    values (#{deptno,jdbcType=INTEGER}, #{dname,jdbcType=VARCHAR}, #{dlocation,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ujiuye.emp.bean.Dept" >
+    insert into dept
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="deptno != null" >
+        deptno,
+      </if>
+      <if test="dname != null" >
+        dname,
+      </if>
+      <if test="dlocation != null" >
+        dlocation,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="deptno != null" >
+        #{deptno,jdbcType=INTEGER},
+      </if>
+      <if test="dname != null" >
+        #{dname,jdbcType=VARCHAR},
+      </if>
+      <if test="dlocation != null" >
+        #{dlocation,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ujiuye.emp.bean.Dept" >
+    update dept
+    <set >
+      <if test="dname != null" >
+        dname = #{dname,jdbcType=VARCHAR},
+      </if>
+      <if test="dlocation != null" >
+        dlocation = #{dlocation,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where deptno = #{deptno,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ujiuye.emp.bean.Dept" >
+    update dept
+    set dname = #{dname,jdbcType=VARCHAR},
+      dlocation = #{dlocation,jdbcType=VARCHAR}
+    where deptno = #{deptno,jdbcType=INTEGER}
+  </update>
+  <select id="getDept" resultMap="BaseResultMap">
+    select * from dept
+  </select>
+</mapper>

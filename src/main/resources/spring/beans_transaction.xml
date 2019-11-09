@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		                    http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+							http://www.springframework.org/schema/aop 
+							http://www.springframework.org/schema/aop/spring-aop-4.1.xsd 
+							http://www.springframework.org/schema/tx 
+							http://www.springframework.org/schema/tx/spring-tx-4.1.xsd ">
+		
+	 <!--  引入spring提供的事务管理 -->	 
+	 <bean id="tm" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+	      <property name="dataSource" ref="ds"></property>
+	 </bean>
+
+	 <!--  采用注解模式完成事务管理   @Transactional
+	      @Transactional
+	      public boolean update(){
+
+	      }
+	  -->
+	 <tx:annotation-driven transaction-manager="tm"/>
+
+
+
+</beans>

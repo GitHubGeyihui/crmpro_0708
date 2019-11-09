@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ujiuye.cus.mapper.CustomerMapper">
+    <resultMap id="BaseResultMap" type="com.ujiuye.cus.bean.Customer">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="comname" property="comname" jdbcType="VARCHAR"/>
+        <result column="companyperson" property="companyperson" jdbcType="VARCHAR"/>
+        <result column="comaddress" property="comaddress" jdbcType="VARCHAR"/>
+        <result column="comphone" property="comphone" jdbcType="VARCHAR"/>
+        <result column="camera" property="camera" jdbcType="VARCHAR"/>
+        <result column="present" property="present" jdbcType="VARCHAR"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="addtime" property="addtime" jdbcType="DATE"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, comname, companyperson, comaddress, comphone, camera, present, remark, addtime
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from customer
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from customer
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.ujiuye.cus.bean.Customer">
+    insert into customer (id, comname, companyperson, 
+      comaddress, comphone, camera, 
+      present, remark, addtime
+      )
+    values (#{id,jdbcType=INTEGER}, #{comname,jdbcType=VARCHAR}, #{companyperson,jdbcType=VARCHAR}, 
+      #{comaddress,jdbcType=VARCHAR}, #{comphone,jdbcType=VARCHAR}, #{camera,jdbcType=VARCHAR}, 
+      #{present,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{addtime,jdbcType=DATE}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.ujiuye.cus.bean.Customer">
+        insert into customer
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="comname != null">
+                comname,
+            </if>
+            <if test="companyperson != null">
+                companyperson,
+            </if>
+            <if test="comaddress != null">
+                comaddress,
+            </if>
+            <if test="comphone != null">
+                comphone,
+            </if>
+            <if test="camera != null">
+                camera,
+            </if>
+            <if test="present != null">
+                present,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+            <if test="addtime != null">
+                addtime,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="comname != null">
+                #{comname,jdbcType=VARCHAR},
+            </if>
+            <if test="companyperson != null">
+                #{companyperson,jdbcType=VARCHAR},
+            </if>
+            <if test="comaddress != null">
+                #{comaddress,jdbcType=VARCHAR},
+            </if>
+            <if test="comphone != null">
+                #{comphone,jdbcType=VARCHAR},
+            </if>
+            <if test="camera != null">
+                #{camera,jdbcType=VARCHAR},
+            </if>
+            <if test="present != null">
+                #{present,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="addtime != null">
+                #{addtime,jdbcType=DATE},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.ujiuye.cus.bean.Customer">
+        update customer
+        <set>
+            <if test="comname != null">
+                comname = #{comname,jdbcType=VARCHAR},
+            </if>
+            <if test="companyperson != null">
+                companyperson = #{companyperson,jdbcType=VARCHAR},
+            </if>
+            <if test="comaddress != null">
+                comaddress = #{comaddress,jdbcType=VARCHAR},
+            </if>
+            <if test="comphone != null">
+                comphone = #{comphone,jdbcType=VARCHAR},
+            </if>
+            <if test="camera != null">
+                camera = #{camera,jdbcType=VARCHAR},
+            </if>
+            <if test="present != null">
+                present = #{present,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="addtime != null">
+                addtime = #{addtime,jdbcType=DATE},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.ujiuye.cus.bean.Customer">
+    update customer
+    set comname = #{comname,jdbcType=VARCHAR},
+      companyperson = #{companyperson,jdbcType=VARCHAR},
+      comaddress = #{comaddress,jdbcType=VARCHAR},
+      comphone = #{comphone,jdbcType=VARCHAR},
+      camera = #{camera,jdbcType=VARCHAR},
+      present = #{present,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      addtime = #{addtime,jdbcType=DATE}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+    <select id="showInfo" resultMap="BaseResultMap" parameterType="com.ujiuye.cus.bean.CustomerVo">
+        select <include refid="Base_Column_List"></include> from customer
+        <where>
+            <if test="kinds!=null and kinds==0">
+            comname like '%${keyCode}%' or  companyperson like '%${keyCode}%'
+            </if>
+            <if test="kinds!=null and kinds==1">
+                comname like '%${keyCode}%'
+            </if>
+            <if test="kinds!=null and kinds==2">
+                companyperson like '%${keyCode}%'
+            </if>
+            <if test="mark==1">
+                order  by   id
+            </if>
+        </where>
+
+    </select>
+    <!--批量删除-->
+    <delete id="batchDelete">
+        delete from customer
+        where id in
+        <foreach collection="array" item="id" separator="," open="(" close=")">
+            #{id }
+        </foreach>
+    </delete>
+</mapper>

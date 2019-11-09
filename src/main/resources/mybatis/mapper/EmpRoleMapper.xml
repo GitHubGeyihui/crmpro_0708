@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ujiuye.auth.mapper.EmpRoleMapper" >
+  <resultMap id="BaseResultMap" type="com.ujiuye.auth.bean.EmpRole" >
+    <id column="erid" property="erid" jdbcType="INTEGER" />
+    <result column="role_fk" property="roleFk" jdbcType="INTEGER" />
+    <result column="emp_fk" property="empFk" jdbcType="INTEGER" />
+    <result column="erdis" property="erdis" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    erid, role_fk, emp_fk, erdis
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from emp_role
+    where erid = #{erid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from emp_role
+    where erid = #{erid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ujiuye.auth.bean.EmpRole" >
+    insert into emp_role (erid, role_fk, emp_fk, 
+      erdis)
+    values (#{erid,jdbcType=INTEGER}, #{roleFk,jdbcType=INTEGER}, #{empFk,jdbcType=INTEGER}, 
+      #{erdis,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ujiuye.auth.bean.EmpRole" >
+    insert into emp_role
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="erid != null" >
+        erid,
+      </if>
+      <if test="roleFk != null" >
+        role_fk,
+      </if>
+      <if test="empFk != null" >
+        emp_fk,
+      </if>
+      <if test="erdis != null" >
+        erdis,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="erid != null" >
+        #{erid,jdbcType=INTEGER},
+      </if>
+      <if test="roleFk != null" >
+        #{roleFk,jdbcType=INTEGER},
+      </if>
+      <if test="empFk != null" >
+        #{empFk,jdbcType=INTEGER},
+      </if>
+      <if test="erdis != null" >
+        #{erdis,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ujiuye.auth.bean.EmpRole" >
+    update emp_role
+    <set >
+      <if test="roleFk != null" >
+        role_fk = #{roleFk,jdbcType=INTEGER},
+      </if>
+      <if test="empFk != null" >
+        emp_fk = #{empFk,jdbcType=INTEGER},
+      </if>
+      <if test="erdis != null" >
+        erdis = #{erdis,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where erid = #{erid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ujiuye.auth.bean.EmpRole" >
+    update emp_role
+    set role_fk = #{roleFk,jdbcType=INTEGER},
+      emp_fk = #{empFk,jdbcType=INTEGER},
+      erdis = #{erdis,jdbcType=VARCHAR}
+    where erid = #{erid,jdbcType=INTEGER}
+  </update>
+  <select id="getEmpRole" resultMap="BaseResultMap">
+    select * from emp_role where emp_fk=#{eid}
+  </select>
+
+  <delete id="deleteByRoleId">
+        delete from  emp_role where role_fk=#{roleid}
+  </delete>
+</mapper>

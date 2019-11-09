@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ujiuye.emp.mapper.ArchivesMapper">
+    <resultMap id="BaseResultMap" type="com.ujiuye.emp.bean.Archives">
+        <id column="dnum" property="dnum" jdbcType="VARCHAR"/>
+        <result column="landline" property="landline" jdbcType="VARCHAR"/>
+        <result column="school" property="school" jdbcType="VARCHAR"/>
+        <result column="zhuanye" property="zhuanye" jdbcType="VARCHAR"/>
+        <result column="sosperson" property="sosperson" jdbcType="VARCHAR"/>
+        <result column="biyedate" property="biyedate" jdbcType="DATE"/>
+        <result column="zzmm" property="zzmm" jdbcType="VARCHAR"/>
+        <result column="minzu" property="minzu" jdbcType="VARCHAR"/>
+        <result column="xueli" property="xueli" jdbcType="VARCHAR"/>
+        <result column="email" property="email" jdbcType="VARCHAR"/>
+        <result column="emp_fk" property="empFk" jdbcType="INTEGER"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="hirdate" property="hirdate" jdbcType="DATE"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    dnum, landline, school, zhuanye, sosperson, biyedate, zzmm, minzu, xueli, email, 
+    emp_fk, remark, hirdate
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from archives
+        where dnum = #{dnum,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from archives
+    where dnum = #{dnum,jdbcType=VARCHAR}
+  </delete>
+    <insert id="insert" parameterType="com.ujiuye.emp.bean.Archives">
+    insert into archives (dnum, landline, school, 
+      zhuanye, sosperson, biyedate, 
+      zzmm, minzu, xueli, 
+      email, emp_fk, remark, 
+      hirdate)
+    values (#{dnum,jdbcType=VARCHAR}, #{landline,jdbcType=VARCHAR}, #{school,jdbcType=VARCHAR}, 
+      #{zhuanye,jdbcType=VARCHAR}, #{sosperson,jdbcType=VARCHAR}, #{biyedate,jdbcType=DATE}, 
+      #{zzmm,jdbcType=VARCHAR}, #{minzu,jdbcType=VARCHAR}, #{xueli,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, #{empFk,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, 
+      #{hirdate,jdbcType=DATE})
+  </insert>
+    <insert id="insertSelective" parameterType="com.ujiuye.emp.bean.Archives">
+        insert into archives
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="dnum != null">
+                dnum,
+            </if>
+            <if test="landline != null">
+                landline,
+            </if>
+            <if test="school != null">
+                school,
+            </if>
+            <if test="zhuanye != null">
+                zhuanye,
+            </if>
+            <if test="sosperson != null">
+                sosperson,
+            </if>
+            <if test="biyedate != null">
+                biyedate,
+            </if>
+            <if test="zzmm != null">
+                zzmm,
+            </if>
+            <if test="minzu != null">
+                minzu,
+            </if>
+            <if test="xueli != null">
+                xueli,
+            </if>
+            <if test="email != null">
+                email,
+            </if>
+            <if test="empFk != null">
+                emp_fk,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+            <if test="hirdate != null">
+                hirdate,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="dnum != null">
+                #{dnum,jdbcType=VARCHAR},
+            </if>
+            <if test="landline != null">
+                #{landline,jdbcType=VARCHAR},
+            </if>
+            <if test="school != null">
+                #{school,jdbcType=VARCHAR},
+            </if>
+            <if test="zhuanye != null">
+                #{zhuanye,jdbcType=VARCHAR},
+            </if>
+            <if test="sosperson != null">
+                #{sosperson,jdbcType=VARCHAR},
+            </if>
+            <if test="biyedate != null">
+                #{biyedate,jdbcType=DATE},
+            </if>
+            <if test="zzmm != null">
+                #{zzmm,jdbcType=VARCHAR},
+            </if>
+            <if test="minzu != null">
+                #{minzu,jdbcType=VARCHAR},
+            </if>
+            <if test="xueli != null">
+                #{xueli,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="empFk != null">
+                #{empFk,jdbcType=INTEGER},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="hirdate != null">
+                #{hirdate,jdbcType=DATE},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.ujiuye.emp.bean.Archives">
+        update archives
+        <set>
+            <if test="landline != null">
+                landline = #{landline,jdbcType=VARCHAR},
+            </if>
+            <if test="school != null">
+                school = #{school,jdbcType=VARCHAR},
+            </if>
+            <if test="zhuanye != null">
+                zhuanye = #{zhuanye,jdbcType=VARCHAR},
+            </if>
+            <if test="sosperson != null">
+                sosperson = #{sosperson,jdbcType=VARCHAR},
+            </if>
+            <if test="biyedate != null">
+                biyedate = #{biyedate,jdbcType=DATE},
+            </if>
+            <if test="zzmm != null">
+                zzmm = #{zzmm,jdbcType=VARCHAR},
+            </if>
+            <if test="minzu != null">
+                minzu = #{minzu,jdbcType=VARCHAR},
+            </if>
+            <if test="xueli != null">
+                xueli = #{xueli,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="empFk != null">
+                emp_fk = #{empFk,jdbcType=INTEGER},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="hirdate != null">
+                hirdate = #{hirdate,jdbcType=DATE},
+            </if>
+        </set>
+        where dnum = #{dnum,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.ujiuye.emp.bean.Archives">
+    update archives
+    set landline = #{landline,jdbcType=VARCHAR},
+      school = #{school,jdbcType=VARCHAR},
+      zhuanye = #{zhuanye,jdbcType=VARCHAR},
+      sosperson = #{sosperson,jdbcType=VARCHAR},
+      biyedate = #{biyedate,jdbcType=DATE},
+      zzmm = #{zzmm,jdbcType=VARCHAR},
+      minzu = #{minzu,jdbcType=VARCHAR},
+      xueli = #{xueli,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      emp_fk = #{empFk,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR},
+      hirdate = #{hirdate,jdbcType=DATE}
+    where dnum = #{dnum,jdbcType=VARCHAR}
+  </update>
+    <resultMap id="newarchives" type="com.ujiuye.emp.bean.Archives" extends="BaseResultMap">
+        <association property="employee" column="emp_fk" javaType="com.ujiuye.emp.bean.Employee"
+                     select="com.ujiuye.emp.mapper.EmployeeMapper.selectByPrimaryKey"></association>
+    </resultMap>
+    <select id="showAllArchives" resultMap="newarchives" parameterType="com.ujiuye.util.MarkInfo">
+    select * from archives
+  </select>
+    <select id="getOneArchivesByEid" resultMap="BaseResultMap">
+select * from archives where emp_fk=#{eid}
+    </select>
+    <insert id="addBatchInfo" parameterType="java.util.List">
+        insert into archives (dnum, landline, school,
+        zhuanye, sosperson, biyedate,
+        zzmm, minzu, xueli,
+        email, emp_fk, remark,
+        hirdate)values
+        <foreach collection="list" item="archives" separator=",">
+            (#{archives.dnum,jdbcType=VARCHAR}, #{archives.landline,jdbcType=VARCHAR}, #{archives.school,jdbcType=VARCHAR},
+            #{archives.zhuanye,jdbcType=VARCHAR}, #{archives.sosperson,jdbcType=VARCHAR}, #{archives.biyedate,jdbcType=DATE},
+            #{archives.zzmm,jdbcType=VARCHAR}, #{archives.minzu,jdbcType=VARCHAR}, #{archives.xueli,jdbcType=VARCHAR},
+            #{archives.email,jdbcType=VARCHAR}, #{archives.empFk,jdbcType=INTEGER}, #{archives.remark,jdbcType=VARCHAR},
+            #{archives.hirdate,jdbcType=DATE})
+        </foreach>
+    </insert>
+</mapper>

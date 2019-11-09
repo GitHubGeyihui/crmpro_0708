@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ujiuye.emp.mapper.EmployeeMapper">
+    <resultMap id="BaseResultMap" type="com.ujiuye.emp.bean.Employee">
+        <id column="eid" property="eid" jdbcType="INTEGER"/>
+        <result column="ename" property="ename" jdbcType="VARCHAR"/>
+        <result column="esex" property="esex" jdbcType="VARCHAR"/>
+        <result column="eage" property="eage" jdbcType="INTEGER"/>
+        <result column="telephone" property="telephone" jdbcType="VARCHAR"/>
+        <result column="hiredate" property="hiredate" jdbcType="DATE"/>
+        <result column="pnum" property="pnum" jdbcType="VARCHAR"/>
+        <result column="username" property="username" jdbcType="VARCHAR"/>
+        <result column="password" property="password" jdbcType="VARCHAR"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="p_fk" property="pFk" jdbcType="INTEGER"/>
+        <result column="d_fk" property="dFk" jdbcType="INTEGER"/>
+        <result column="l_fk" property="lFk" jdbcType="INTEGER"/>
+        <result column="emppic" property="emppic" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+    eid, ename, esex, eage, telephone, hiredate, pnum, username, password, remark, p_fk, 
+    d_fk, l_fk, emppic
+  </sql>
+    <!--    &lt;!&ndash; 一对一的级联查询&ndash;&gt;
+        <resultMap id="newEmp" type="com.ujiuye.emp.bean.Employee">
+        <association property="position" column="p_fk" javaType="com.ujiuye.emp.bean.Position" select="com.ujiuye.emp.mapper.PositionMapper.selectByPrimaryKey"></association>
+            <association property="dept" column="d_fk" javaType="com.ujiuye.emp.bean.Dept" select="com.ujiuye.emp.mapper.DeptMapper.selectByPrimaryKey"></association>
+            <association property="level" column="l_fk" javaType="com.ujiuye.emp.bean.Level" select="com.ujiuye.emp.mapper.LevelMapper.selectByPrimaryKey"></association>
+            <association property="archives" column="eid" javaType="com.ujiuye.emp.bean.Archives" select="com.ujiuye.emp.mapper.ArchivesMapper.getOneArchivesByEid"></association>
+        </resultMap>
+
+        <select id="selectByPrimaryKey" resultMap="newEmp" parameterType="java.lang.Integer">
+            select
+            <include refid="Base_Column_List"/>
+            from employee
+            where eid = #{eid,jdbcType=INTEGER}
+        </select>-->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from employee
+    where eid = #{eid,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.ujiuye.emp.bean.Employee">
+        <selectKey keyProperty="eid" keyColumn="eid" resultType="int" order="AFTER">
+    select last_insert_id();
+        </selectKey>
+        insert into employee (eid, ename, esex,
+        eage, telephone, hiredate,
+        pnum, username, password,
+        remark, p_fk, d_fk, l_fk,
+        emppic)
+        values (#{eid,jdbcType=INTEGER}, #{ename,jdbcType=VARCHAR}, #{esex,jdbcType=VARCHAR},
+        #{eage,jdbcType=INTEGER}, #{telephone,jdbcType=VARCHAR}, #{hiredate,jdbcType=DATE},
+        #{pnum,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
+        #{remark,jdbcType=VARCHAR}, #{pFk,jdbcType=INTEGER}, #{dFk,jdbcType=INTEGER}, #{lFk,jdbcType=INTEGER},
+        #{emppic,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.ujiuye.emp.bean.Employee">
+        insert into employee
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="eid != null">
+                eid,
+            </if>
+            <if test="ename != null">
+                ename,
+            </if>
+            <if test="esex != null">
+                esex,
+            </if>
+            <if test="eage != null">
+                eage,
+            </if>
+            <if test="telephone != null">
+                telephone,
+            </if>
+            <if test="hiredate != null">
+                hiredate,
+            </if>
+            <if test="pnum != null">
+                pnum,
+            </if>
+            <if test="username != null">
+                username,
+            </if>
+            <if test="password != null">
+                password,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+            <if test="pFk != null">
+                p_fk,
+            </if>
+            <if test="dFk != null">
+                d_fk,
+            </if>
+            <if test="lFk != null">
+                l_fk,
+            </if>
+            <if test="emppic != null">
+                emppic,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="eid != null">
+                #{eid,jdbcType=INTEGER},
+            </if>
+            <if test="ename != null">
+                #{ename,jdbcType=VARCHAR},
+            </if>
+            <if test="esex != null">
+                #{esex,jdbcType=VARCHAR},
+            </if>
+            <if test="eage != null">
+                #{eage,jdbcType=INTEGER},
+            </if>
+            <if test="telephone != null">
+                #{telephone,jdbcType=VARCHAR},
+            </if>
+            <if test="hiredate != null">
+                #{hiredate,jdbcType=DATE},
+            </if>
+            <if test="pnum != null">
+                #{pnum,jdbcType=VARCHAR},
+            </if>
+            <if test="username != null">
+                #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="pFk != null">
+                #{pFk,jdbcType=INTEGER},
+            </if>
+            <if test="dFk != null">
+                #{dFk,jdbcType=INTEGER},
+            </if>
+            <if test="lFk != null">
+                #{lFk,jdbcType=INTEGER},
+            </if>
+            <if test="emppic != null">
+                #{emppic,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.ujiuye.emp.bean.Employee">
+        update employee
+        <set>
+            <if test="ename != null">
+                ename = #{ename,jdbcType=VARCHAR},
+            </if>
+            <if test="esex != null">
+                esex = #{esex,jdbcType=VARCHAR},
+            </if>
+            <if test="eage != null">
+                eage = #{eage,jdbcType=INTEGER},
+            </if>
+            <if test="telephone != null">
+                telephone = #{telephone,jdbcType=VARCHAR},
+            </if>
+            <if test="hiredate != null">
+                hiredate = #{hiredate,jdbcType=DATE},
+            </if>
+            <if test="pnum != null">
+                pnum = #{pnum,jdbcType=VARCHAR},
+            </if>
+            <if test="username != null">
+                username = #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                password = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="pFk != null">
+                p_fk = #{pFk,jdbcType=INTEGER},
+            </if>
+            <if test="dFk != null">
+                d_fk = #{dFk,jdbcType=INTEGER},
+            </if>
+            <if test="lFk != null">
+                l_fk = #{lFk,jdbcType=INTEGER},
+            </if>
+            <if test="emppic != null">
+                emppic = #{emppic,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where eid = #{eid,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.ujiuye.emp.bean.Employee">
+    update employee
+    set ename = #{ename,jdbcType=VARCHAR},
+      esex = #{esex,jdbcType=VARCHAR},
+      eage = #{eage,jdbcType=INTEGER},
+      telephone = #{telephone,jdbcType=VARCHAR},
+      hiredate = #{hiredate,jdbcType=DATE},
+      pnum = #{pnum,jdbcType=VARCHAR},
+      username = #{username,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      p_fk = #{pFk,jdbcType=INTEGER},
+      d_fk = #{dFk,jdbcType=INTEGER},
+      l_fk = #{lFk,jdbcType=INTEGER},
+      emppic = #{emppic,jdbcType=VARCHAR}
+    where eid = #{eid,jdbcType=INTEGER}
+  </update>
+    <!-- 一对一的级联查询 -->
+    <resultMap id="newEmp" type="com.ujiuye.emp.bean.Employee" extends="BaseResultMap">
+        <association property="position" column="p_fk" javaType="com.ujiuye.emp.bean.Position"
+                     select="com.ujiuye.emp.mapper.PositionMapper.selectByPrimaryKey"/>
+        <association property="dept" column="d_fk" javaType="com.ujiuye.emp.bean.Dept"
+                     select="com.ujiuye.emp.mapper.DeptMapper.selectByPrimaryKey"/>
+        <association property="level" column="l_fk" javaType="com.ujiuye.emp.bean.Level"
+                     select="com.ujiuye.emp.mapper.LevelMapper.selectByPrimaryKey"/>
+        <association property="archives" column="eid" javaType="com.ujiuye.emp.bean.Archives"
+                     select="com.ujiuye.emp.mapper.ArchivesMapper.getOneArchivesByEid"/>
+    </resultMap>
+
+    <select id="selectByPrimaryKey" resultMap="newEmp" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from employee
+        where eid = #{eid,jdbcType=INTEGER}
+    </select>
+    <select id="showEmpInfo" resultMap="newEmp" parameterType="com.ujiuye.util.MarkInfo">
+        select * from employee
+        <where>
+            <if test="mark==1">
+                p_fk=4
+            </if>
+            <if test="mark==2">
+                p_fk in (1,2,3)
+            </if>
+            <if test="mark==3 and eid !=null">
+                p_fk in (1,2,3) and eid!=#{eid}
+            </if>
+            <if test="mark==3">
+                eid in (1,2)
+            </if>
+        </where>
+    </select>
+    <select id="login" resultMap="BaseResultMap">
+        select *from employee where username=#{name} and password=#{pass}
+    </select>
+
+
+
+</mapper>

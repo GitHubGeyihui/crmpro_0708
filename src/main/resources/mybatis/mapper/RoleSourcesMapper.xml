@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ujiuye.auth.mapper.RoleSourcesMapper" >
+  <resultMap id="BaseResultMap" type="com.ujiuye.auth.bean.RoleSources" >
+    <id column="rsid" property="rsid" jdbcType="INTEGER" />
+    <result column="rsdis" property="rsdis" jdbcType="VARCHAR" />
+    <result column="sid" property="sid" jdbcType="INTEGER" />
+    <result column="roleid" property="roleid" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    rsid, rsdis, sid, roleid
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from role_sources
+    where rsid = #{rsid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from role_sources
+    where rsid = #{rsid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ujiuye.auth.bean.RoleSources" >
+    insert into role_sources (rsid, rsdis, sid, 
+      roleid)
+    values (#{rsid,jdbcType=INTEGER}, #{rsdis,jdbcType=VARCHAR}, #{sid,jdbcType=INTEGER}, 
+      #{roleid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ujiuye.auth.bean.RoleSources" >
+    insert into role_sources
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="rsid != null" >
+        rsid,
+      </if>
+      <if test="rsdis != null" >
+        rsdis,
+      </if>
+      <if test="sid != null" >
+        sid,
+      </if>
+      <if test="roleid != null" >
+        roleid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="rsid != null" >
+        #{rsid,jdbcType=INTEGER},
+      </if>
+      <if test="rsdis != null" >
+        #{rsdis,jdbcType=VARCHAR},
+      </if>
+      <if test="sid != null" >
+        #{sid,jdbcType=INTEGER},
+      </if>
+      <if test="roleid != null" >
+        #{roleid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ujiuye.auth.bean.RoleSources" >
+    update role_sources
+    <set >
+      <if test="rsdis != null" >
+        rsdis = #{rsdis,jdbcType=VARCHAR},
+      </if>
+      <if test="sid != null" >
+        sid = #{sid,jdbcType=INTEGER},
+      </if>
+      <if test="roleid != null" >
+        roleid = #{roleid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where rsid = #{rsid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ujiuye.auth.bean.RoleSources" >
+    update role_sources
+    set rsdis = #{rsdis,jdbcType=VARCHAR},
+      sid = #{sid,jdbcType=INTEGER},
+      roleid = #{roleid,jdbcType=INTEGER}
+    where rsid = #{rsid,jdbcType=INTEGER}
+  </update>
+  <delete id="deleteByRoleId">
+       delete from  role_sources where roleid=#{roleid}
+  </delete>
+
+  <!-- 批量添加  我们的中间表数据 -->
+  <insert id="batchAddInfo" parameterType="java.util.List">
+    insert into role_sources (rsid, rsdis, sid,roleid)values
+    <foreach collection="list" item="rs" separator=",">
+      (#{rs.rsid,jdbcType=INTEGER}, #{rs.rsdis,jdbcType=VARCHAR}, #{rs.sid,jdbcType=INTEGER},
+      #{rs.roleid,jdbcType=INTEGER})
+    </foreach>
+  </insert>
+
+  <!-- 批量删除 -->
+  <delete id="batchDeleteInfo" >
+       delete from  role_sources where roleid=#{roleid}
+  </delete>
+
+</mapper>

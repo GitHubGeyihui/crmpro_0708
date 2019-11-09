@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ujiuye.pro.mapper.AttachmentMapper">
+    <resultMap id="BaseResultMap" type="com.ujiuye.pro.bean.Attachment">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="pro_fk" property="proFk" jdbcType="INTEGER"/>
+        <result column="attname" property="attname" jdbcType="VARCHAR"/>
+        <result column="attdis" property="attdis" jdbcType="VARCHAR"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="path" property="path" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, pro_fk, attname, attdis, remark, path
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from attachment
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from attachment
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.ujiuye.pro.bean.Attachment">
+    insert into attachment (id, pro_fk, attname, 
+      attdis, remark, path
+      )
+    values (#{id,jdbcType=INTEGER}, #{proFk,jdbcType=INTEGER}, #{attname,jdbcType=VARCHAR}, 
+      #{attdis,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{path,jdbcType=VARCHAR}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.ujiuye.pro.bean.Attachment">
+        insert into attachment
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="proFk != null">
+                pro_fk,
+            </if>
+            <if test="attname != null">
+                attname,
+            </if>
+            <if test="attdis != null">
+                attdis,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+            <if test="path != null">
+                path,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="proFk != null">
+                #{proFk,jdbcType=INTEGER},
+            </if>
+            <if test="attname != null">
+                #{attname,jdbcType=VARCHAR},
+            </if>
+            <if test="attdis != null">
+                #{attdis,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="path != null">
+                #{path,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.ujiuye.pro.bean.Attachment">
+        update attachment
+        <set>
+            <if test="proFk != null">
+                pro_fk = #{proFk,jdbcType=INTEGER},
+            </if>
+            <if test="attname != null">
+                attname = #{attname,jdbcType=VARCHAR},
+            </if>
+            <if test="attdis != null">
+                attdis = #{attdis,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="path != null">
+                path = #{path,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.ujiuye.pro.bean.Attachment">
+    update attachment
+    set pro_fk = #{proFk,jdbcType=INTEGER},
+      attname = #{attname,jdbcType=VARCHAR},
+      attdis = #{attdis,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      path = #{path,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+    <resultMap id="newAtt" type="com.ujiuye.pro.bean.Attachment" extends="BaseResultMap">
+            <association property="project" column="pro_fk" javaType="com.ujiuye.pro.bean.Project" select="com.ujiuye.pro.mapper.ProjectMapper.selectByPrimaryKey">
+
+        </association>
+    </resultMap>
+    <select id="showAllAttachment" parameterType="com.ujiuye.util.MarkInfo" resultMap="newAtt">
+    select * from attachment
+  </select>
+</mapper>

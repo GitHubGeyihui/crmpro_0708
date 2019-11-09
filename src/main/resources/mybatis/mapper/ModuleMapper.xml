@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ujiuye.pro.mapper.ModuleMapper">
+    <resultMap id="BaseResultMap" type="com.ujiuye.pro.bean.Module">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="proname" property="proname" jdbcType="VARCHAR"/>
+        <result column="analysis_fk" property="analysisFk" jdbcType="INTEGER"/>
+        <result column="modname" property="modname" jdbcType="VARCHAR"/>
+        <result column="level" property="level" jdbcType="VARCHAR"/>
+        <result column="simpledis" property="simpledis" jdbcType="VARCHAR"/>
+        <result column="detaileddis" property="detaileddis" jdbcType="VARCHAR"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, proname, analysis_fk, modname, level, simpledis, detaileddis, remark
+  </sql>
+<!--    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">-->
+<!--        select-->
+<!--        <include refid="Base_Column_List"/>-->
+<!--        from module-->
+<!--        where id = #{id,jdbcType=INTEGER}-->
+<!--    </select>-->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from module
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.ujiuye.pro.bean.Module">
+    insert into module (id, proname, analysis_fk, 
+      modname, level, simpledis, 
+      detaileddis, remark)
+    values (#{id,jdbcType=INTEGER}, #{proname,jdbcType=VARCHAR}, #{analysisFk,jdbcType=INTEGER}, 
+      #{modname,jdbcType=VARCHAR}, #{level,jdbcType=VARCHAR}, #{simpledis,jdbcType=VARCHAR}, 
+      #{detaileddis,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.ujiuye.pro.bean.Module">
+        insert into module
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="proname != null">
+                proname,
+            </if>
+            <if test="analysisFk != null">
+                analysis_fk,
+            </if>
+            <if test="modname != null">
+                modname,
+            </if>
+            <if test="level != null">
+                level,
+            </if>
+            <if test="simpledis != null">
+                simpledis,
+            </if>
+            <if test="detaileddis != null">
+                detaileddis,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="proname != null">
+                #{proname,jdbcType=VARCHAR},
+            </if>
+            <if test="analysisFk != null">
+                #{analysisFk,jdbcType=INTEGER},
+            </if>
+            <if test="modname != null">
+                #{modname,jdbcType=VARCHAR},
+            </if>
+            <if test="level != null">
+                #{level,jdbcType=VARCHAR},
+            </if>
+            <if test="simpledis != null">
+                #{simpledis,jdbcType=VARCHAR},
+            </if>
+            <if test="detaileddis != null">
+                #{detaileddis,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.ujiuye.pro.bean.Module">
+        update module
+        <set>
+            <if test="proname != null">
+                proname = #{proname,jdbcType=VARCHAR},
+            </if>
+            <if test="analysisFk != null">
+                analysis_fk = #{analysisFk,jdbcType=INTEGER},
+            </if>
+            <if test="modname != null">
+                modname = #{modname,jdbcType=VARCHAR},
+            </if>
+            <if test="level != null">
+                level = #{level,jdbcType=VARCHAR},
+            </if>
+            <if test="simpledis != null">
+                simpledis = #{simpledis,jdbcType=VARCHAR},
+            </if>
+            <if test="detaileddis != null">
+                detaileddis = #{detaileddis,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.ujiuye.pro.bean.Module">
+    update module
+    set proname = #{proname,jdbcType=VARCHAR},
+      analysis_fk = #{analysisFk,jdbcType=INTEGER},
+      modname = #{modname,jdbcType=VARCHAR},
+      level = #{level,jdbcType=VARCHAR},
+      simpledis = #{simpledis,jdbcType=VARCHAR},
+      detaileddis = #{detaileddis,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+    <resultMap id="newmodule" type="com.ujiuye.pro.bean.Module">
+        <association property="analysis" column="analysis_fk" javaType="com.ujiuye.pro.bean.Analysis" select="com.ujiuye.pro.mapper.AnalysisMapper.selectByPrimaryKey">
+        </association>
+    </resultMap>
+    <select id="showAllModule" resultMap="newmodule">
+        select * from module
+    </select>
+    <select id="checkModel" resultMap="BaseResultMap">
+       select * from module where  modname = #{mname} and  analysis_fk=#{pid}
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="newmodule" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from module
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+<!--   由功能查模块，由模块查需求-->
+
+<!--    返回多个模块对象 当前项目下所有的模块-->
+    <select id="getInfoByAk" resultMap="BaseResultMap">
+        select * from module where analysis_fk=#{pid}
+        <!--当前模块下必须有功能 -->
+        <if test="mark==4">
+            and id in (select distinct modele_fk from function)
+        </if>
+    </select>
+
+</mapper>

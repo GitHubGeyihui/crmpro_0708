@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ujiuye.emp.mapper.LevelMapper" >
+  <resultMap id="BaseResultMap" type="com.ujiuye.emp.bean.Level" >
+    <id column="jid" property="jid" jdbcType="INTEGER" />
+    <result column="jname" property="jname" jdbcType="VARCHAR" />
+    <result column="jdis" property="jdis" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    jid, jname, jdis
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from level
+    where jid = #{jid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from level
+    where jid = #{jid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ujiuye.emp.bean.Level" >
+    insert into level (jid, jname, jdis
+      )
+    values (#{jid,jdbcType=INTEGER}, #{jname,jdbcType=VARCHAR}, #{jdis,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ujiuye.emp.bean.Level" >
+    insert into level
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="jid != null" >
+        jid,
+      </if>
+      <if test="jname != null" >
+        jname,
+      </if>
+      <if test="jdis != null" >
+        jdis,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="jid != null" >
+        #{jid,jdbcType=INTEGER},
+      </if>
+      <if test="jname != null" >
+        #{jname,jdbcType=VARCHAR},
+      </if>
+      <if test="jdis != null" >
+        #{jdis,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ujiuye.emp.bean.Level" >
+    update level
+    <set >
+      <if test="jname != null" >
+        jname = #{jname,jdbcType=VARCHAR},
+      </if>
+      <if test="jdis != null" >
+        jdis = #{jdis,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where jid = #{jid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ujiuye.emp.bean.Level" >
+    update level
+    set jname = #{jname,jdbcType=VARCHAR},
+      jdis = #{jdis,jdbcType=VARCHAR}
+    where jid = #{jid,jdbcType=INTEGER}
+  </update>
+  <select id="getLevel" resultMap="BaseResultMap">
+    select * from level
+  </select>
+</mapper>

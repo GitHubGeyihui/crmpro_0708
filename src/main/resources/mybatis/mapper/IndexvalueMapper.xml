@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ujiuye.duibiao.mapper.IndexvalueMapper" >
+  <resultMap id="BaseResultMap" type="com.ujiuye.duibiao.bean.Indexvalue" >
+    <id column="in_id" property="inId" jdbcType="INTEGER" />
+    <result column="in_turnover" property="inTurnover" jdbcType="DOUBLE" />
+    <result column="in_business" property="inBusiness" jdbcType="VARCHAR" />
+    <result column="comname_fk" property="comnameFk" jdbcType="INTEGER" />
+    <result column="in_remark" property="inRemark" jdbcType="VARCHAR" />
+    <result column="in_file" property="inFile" jdbcType="VARCHAR" />
+    <result column="emp_fk5" property="empFk5" jdbcType="INTEGER" />
+    <result column="in_starttime" property="inStarttime" jdbcType="DATE" />
+    <result column="in_endtime" property="inEndtime" jdbcType="DATE" />
+    <result column="in_updatetime" property="inUpdatetime" jdbcType="DATE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    in_id, in_turnover, in_business, comname_fk, in_remark, in_file, emp_fk5, in_starttime, 
+    in_endtime, in_updatetime
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from indexvalue
+    where in_id = #{inId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from indexvalue
+    where in_id = #{inId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ujiuye.duibiao.bean.Indexvalue" >
+    insert into indexvalue (in_id, in_turnover, in_business, 
+      comname_fk, in_remark, in_file, 
+      emp_fk5, in_starttime, in_endtime, 
+      in_updatetime)
+    values (#{inId,jdbcType=INTEGER}, #{inTurnover,jdbcType=DOUBLE}, #{inBusiness,jdbcType=VARCHAR}, 
+      #{comnameFk,jdbcType=INTEGER}, #{inRemark,jdbcType=VARCHAR}, #{inFile,jdbcType=VARCHAR}, 
+      #{empFk5,jdbcType=INTEGER}, #{inStarttime,jdbcType=DATE}, #{inEndtime,jdbcType=DATE}, 
+      #{inUpdatetime,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ujiuye.duibiao.bean.Indexvalue" >
+    insert into indexvalue
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="inId != null" >
+        in_id,
+      </if>
+      <if test="inTurnover != null" >
+        in_turnover,
+      </if>
+      <if test="inBusiness != null" >
+        in_business,
+      </if>
+      <if test="comnameFk != null" >
+        comname_fk,
+      </if>
+      <if test="inRemark != null" >
+        in_remark,
+      </if>
+      <if test="inFile != null" >
+        in_file,
+      </if>
+      <if test="empFk5 != null" >
+        emp_fk5,
+      </if>
+      <if test="inStarttime != null" >
+        in_starttime,
+      </if>
+      <if test="inEndtime != null" >
+        in_endtime,
+      </if>
+      <if test="inUpdatetime != null" >
+        in_updatetime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="inId != null" >
+        #{inId,jdbcType=INTEGER},
+      </if>
+      <if test="inTurnover != null" >
+        #{inTurnover,jdbcType=DOUBLE},
+      </if>
+      <if test="inBusiness != null" >
+        #{inBusiness,jdbcType=VARCHAR},
+      </if>
+      <if test="comnameFk != null" >
+        #{comnameFk,jdbcType=INTEGER},
+      </if>
+      <if test="inRemark != null" >
+        #{inRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="inFile != null" >
+        #{inFile,jdbcType=VARCHAR},
+      </if>
+      <if test="empFk5 != null" >
+        #{empFk5,jdbcType=INTEGER},
+      </if>
+      <if test="inStarttime != null" >
+        #{inStarttime,jdbcType=DATE},
+      </if>
+      <if test="inEndtime != null" >
+        #{inEndtime,jdbcType=DATE},
+      </if>
+      <if test="inUpdatetime != null" >
+        #{inUpdatetime,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ujiuye.duibiao.bean.Indexvalue" >
+    update indexvalue
+    <set >
+      <if test="inTurnover != null" >
+        in_turnover = #{inTurnover,jdbcType=DOUBLE},
+      </if>
+      <if test="inBusiness != null" >
+        in_business = #{inBusiness,jdbcType=VARCHAR},
+      </if>
+      <if test="comnameFk != null" >
+        comname_fk = #{comnameFk,jdbcType=INTEGER},
+      </if>
+      <if test="inRemark != null" >
+        in_remark = #{inRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="inFile != null" >
+        in_file = #{inFile,jdbcType=VARCHAR},
+      </if>
+      <if test="empFk5 != null" >
+        emp_fk5 = #{empFk5,jdbcType=INTEGER},
+      </if>
+      <if test="inStarttime != null" >
+        in_starttime = #{inStarttime,jdbcType=DATE},
+      </if>
+      <if test="inEndtime != null" >
+        in_endtime = #{inEndtime,jdbcType=DATE},
+      </if>
+      <if test="inUpdatetime != null" >
+        in_updatetime = #{inUpdatetime,jdbcType=DATE},
+      </if>
+    </set>
+    where in_id = #{inId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ujiuye.duibiao.bean.Indexvalue" >
+    update indexvalue
+    set in_turnover = #{inTurnover,jdbcType=DOUBLE},
+      in_business = #{inBusiness,jdbcType=VARCHAR},
+      comname_fk = #{comnameFk,jdbcType=INTEGER},
+      in_remark = #{inRemark,jdbcType=VARCHAR},
+      in_file = #{inFile,jdbcType=VARCHAR},
+      emp_fk5 = #{empFk5,jdbcType=INTEGER},
+      in_starttime = #{inStarttime,jdbcType=DATE},
+      in_endtime = #{inEndtime,jdbcType=DATE},
+      in_updatetime = #{inUpdatetime,jdbcType=DATE}
+    where in_id = #{inId,jdbcType=INTEGER}
+  </update>
+  <resultMap id="newIndexValue" type="com.ujiuye.duibiao.bean.Indexvalue" extends="BaseResultMap">
+    <association property="employee" column="emp_fk5" javaType="com.ujiuye.emp.bean.Employee" select="com.ujiuye.emp.mapper.EmployeeMapper.selectByPrimaryKey"/>
+    <association property="datacollect" column="comname_fk" javaType="com.ujiuye.duibiao.bean.Datacollect" select="com.ujiuye.duibiao.mapper.DatacollectMapper.selectByPrimaryKey"/>
+  </resultMap>
+
+  <select id="showAllIndexValue" resultMap="newIndexValue">
+     select *  from  indexvalue
+  </select>
+</mapper>
